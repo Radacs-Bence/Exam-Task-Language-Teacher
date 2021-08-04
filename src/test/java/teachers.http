@@ -1,0 +1,42 @@
+POST http://localhost:8080/api/teachers
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "name" : "e"
+}
+
+###
+
+POST http://localhost:8080/api/teachers/1/languages
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "language" : "ENG"
+}
+
+###
+PUT http://localhost:8080/api/teachers/1/contact
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "address" : "Van utca",
+  "eMail" : "blabla@ize.com",
+  "phone" : "201234567"
+}
+
+###
+GET http://localhost:8080/api/teachers/
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/api/teachers/2
+Accept: application/json
+
+###
