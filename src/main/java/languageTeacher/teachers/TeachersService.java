@@ -1,4 +1,4 @@
-package teachers;
+package languageTeacher.teachers;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;

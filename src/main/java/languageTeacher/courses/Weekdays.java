@@ -1,4 +1,4 @@
-package courses;
+package languageTeacher.courses;
 
 public enum Weekdays {
 

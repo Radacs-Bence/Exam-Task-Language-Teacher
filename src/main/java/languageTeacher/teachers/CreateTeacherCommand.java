@@ -1,18 +1,14 @@
-package teachers;
+package languageTeacher.teachers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactDTO {
+public class CreateTeacherCommand {
 
-    private String address;
+    private String name;
 
-    private String eMail;
-
-    private String phone;
 }

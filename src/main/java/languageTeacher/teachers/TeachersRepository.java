@@ -1,4 +1,4 @@
-package teachers;
+package languageTeacher.teachers;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package teachers;
+package languageTeacher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;

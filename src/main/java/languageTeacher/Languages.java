@@ -1,4 +1,4 @@
-package teachers;
+package languageTeacher;
 
 public enum Languages {
 

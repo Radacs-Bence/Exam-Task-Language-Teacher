@@ -1,4 +1,4 @@
-package teachers;
+package languageTeacher.teachers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

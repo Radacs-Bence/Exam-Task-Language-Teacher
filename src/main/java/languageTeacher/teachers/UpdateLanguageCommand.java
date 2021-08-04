@@ -1,5 +1,6 @@
-package teachers;
+package languageTeacher.teachers;
 
+import languageTeacher.Languages;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateTeacherCommand {
+public class UpdateLanguageCommand {
 
-    private String name;
-
+    private Languages language;
 }

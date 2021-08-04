@@ -1,9 +1,9 @@
-package courses;
+package languageTeacher.courses;
 
+import languageTeacher.Languages;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import teachers.Languages;
 
 import javax.persistence.*;
 import java.time.LocalDate;
