@@ -34,6 +34,11 @@ public class Course {
 
     private LocalDate end;
 
+    public Course(String name, Languages language) {
+        this.name = name;
+        this.language = language;
+    }
+
     public void addTimeslot(Timeslot timeslot){
         if (timetable == null){
             timetable = new ArrayList<>();
