@@ -1,6 +1,7 @@
 package languageTeacher.courses;
 
 import languageTeacher.Languages;
+import languageTeacher.teachers.Teacher;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,6 +40,11 @@ public class Course {
         this.language = language;
     }
 
+    @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Teacher teacher;
+
     public void addTimeslot(Timeslot timeslot){
         if (timetable == null){
             timetable = new ArrayList<>();
@@ -52,5 +58,10 @@ public class Course {
         timetable.remove(timeslot);
     }
 
-
+    public void assingTeacher(Teacher teacher){
+        if (teacher != null){
+            teacher.removeCourse(id);
+        }
+        teacher.addCourse(this);
+    }
 }

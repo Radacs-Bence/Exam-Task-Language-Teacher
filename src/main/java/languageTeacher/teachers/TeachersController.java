@@ -1,5 +1,6 @@
 package languageTeacher.teachers;
 
+import languageTeacher.courses.CreateCourseCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,11 @@ public class TeachersController {
         return teachersService.findTeacherById(id);
     }
 
+    @GetMapping("/{id}/courses")
+    public TeacherCourseDTO findTeacherByIdWithCourses(@PathVariable("id") Long id){
+        return teachersService.findTeacherByIdWithCourses(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TeacherDTO saveTeacher(@RequestBody CreateTeacherCommand command){
@@ -43,6 +49,12 @@ public class TeachersController {
         return teachersService.modifyContact(id, command);
     }
 
+    @PutMapping("/{id}/courses")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public TeacherCourseDTO addCourse(@PathVariable Long id, @RequestBody CreateCourseCommand command){
+        return teachersService.addCourse(id, command);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTeacher(@PathVariable Long id){
@@ -53,5 +65,11 @@ public class TeachersController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAll(){
         teachersService.deleteAll();
+    }
+
+    @DeleteMapping("/{id}/courses/{courseId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeTeacherCourse(@PathVariable Long id, @PathVariable Long courseId){
+        teachersService.removeTeacherCourse(id, courseId);
     }
 }

@@ -1,12 +1,13 @@
 package languageTeacher.teachers;
 
 import languageTeacher.Languages;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import languageTeacher.courses.Course;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -31,6 +32,11 @@ public class Teacher {
     @Embedded
     private Contact contact;
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "teacher")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Course> courses;
+
     public Teacher(String name) {
         this.name = name;
     }
@@ -42,4 +48,17 @@ public class Teacher {
         languages.add(language);
     }
 
+    public void addCourse(Course course){
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+        course.setTeacher(this);
+        courses.add(course);
+    }
+
+    public void removeCourse(Long courseId){
+        Course course = courses.stream().filter(c -> c.getId() == courseId).findAny().get();
+        course.setTeacher(null);
+        courses.remove(course);
+    }
 }

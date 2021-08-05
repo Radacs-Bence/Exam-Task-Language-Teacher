@@ -1,6 +1,8 @@
 package languageTeacher.courses;
 
 
+import languageTeacher.teachers.Teacher;
+import languageTeacher.teachers.TeachersRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,12 @@ public class CoursesService {
 
     private ModelMapper modelMapper;
     private CoursesRepository coursesRepository;
+    private TeachersRepository teachersRepository;
 
-    public CoursesService(ModelMapper modelMapper, CoursesRepository coursesRepository) {
+    public CoursesService(ModelMapper modelMapper, CoursesRepository coursesRepository, TeachersRepository teachersRepository) {
         this.modelMapper = modelMapper;
         this.coursesRepository = coursesRepository;
+        this.teachersRepository = teachersRepository;
     }
 
     public List<CourseDTO> listCourses() {
@@ -83,5 +87,15 @@ public class CoursesService {
         course.removeTimeslot(timeSlotId);
 
         return modelMapper.map(course, CourseTimetableDTO.class);
+    }
+
+    @Transactional
+    public CourseDTO modifyTeacher(Long id, Long teacherId) {
+        Teacher teacher = teachersRepository.findById(teacherId).get();
+        Course course = coursesRepository.findById(id).get();
+
+        course.assingTeacher(teacher);
+
+        return modelMapper.map(course, CourseDTO.class);
     }
 }

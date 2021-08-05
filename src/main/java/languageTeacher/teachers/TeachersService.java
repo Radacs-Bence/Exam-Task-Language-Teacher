@@ -1,5 +1,8 @@
 package languageTeacher.teachers;
 
+import languageTeacher.courses.Course;
+import languageTeacher.courses.CoursesRepository;
+import languageTeacher.courses.CreateCourseCommand;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -12,22 +15,24 @@ import java.util.List;
 public class TeachersService {
 
 
-
     private ModelMapper modelMapper;
     private TeachersRepository teachersRepository;
+    private CoursesRepository coursesRepository;
 
-    public TeachersService(ModelMapper modelMapper, TeachersRepository teachersRepository) {
+    public TeachersService(ModelMapper modelMapper, TeachersRepository teachersRepository, CoursesRepository coursesRepository) {
         this.modelMapper = modelMapper;
         this.teachersRepository = teachersRepository;
        /* teachersRepository.save(new Teacher("Gipsz Jakab"));
         teachersRepository.save(new Teacher("Gipsz Jónás"));
         teachersRepository.save(new Teacher("Kis Piroska"));*/
+        this.coursesRepository = coursesRepository;
     }
 
     public List<TeacherDTO> listTeachers() {
         List<Teacher> teachers = teachersRepository.findAllWithLanguages();
 
-        Type targetListType = new TypeToken<List<TeacherDTO>>(){}.getType();
+        Type targetListType = new TypeToken<List<TeacherDTO>>() {
+        }.getType();
         return modelMapper.map(teachers, targetListType);
     }
 
@@ -37,7 +42,7 @@ public class TeachersService {
     }
 
     private Teacher searchById(long id) {
-        Teacher teacher = teachersRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("Teacher not found: " + id));
+        Teacher teacher = teachersRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Teacher not found: " + id));
         return teacher;
     }
 
@@ -67,5 +72,26 @@ public class TeachersService {
 
     public void deleteAll() {
         teachersRepository.deleteAll();
+    }
+
+    public TeacherCourseDTO findTeacherByIdWithCourses(Long id) {
+        Teacher teacher = teachersRepository.findByIdWithCourses(id);
+        return modelMapper.map(teacher, TeacherCourseDTO.class);
+    }
+
+    @Transactional
+    public TeacherCourseDTO addCourse(Long id, CreateCourseCommand command) {
+        Teacher teacher = teachersRepository.findByIdWithCourses(id);
+        teacher.addCourse(new Course(command.getName(), command.getLanguage()));
+        Teacher teacher2 = teachersRepository.findByIdWithCourses(id);
+        return modelMapper.map(teacher2, TeacherCourseDTO.class);
+    }
+
+    @Transactional
+    public TeacherCourseDTO removeTeacherCourse(Long id, Long courseId) {
+        Teacher teacher = teachersRepository.findByIdWithCourses(id);
+
+        teacher.removeCourse(courseId);
+        return modelMapper.map(teacher, TeacherCourseDTO.class);
     }
 }

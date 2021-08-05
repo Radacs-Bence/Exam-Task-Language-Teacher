@@ -1,9 +1,11 @@
 package languageTeacher.courses;
 
 
+import languageTeacher.Languages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -48,6 +50,12 @@ public class CoursesController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public CourseDTO modifyDuration(@PathVariable Long id, @RequestBody UpdateDurationCommand command){
         return coursesService.modifyDuration(id, command);
+    }
+
+    @PutMapping("/{id}/teacher/{teacherId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public CourseDTO modifyTeacher(@PathVariable Long id, @PathVariable Long teacherId){
+        return coursesService.modifyTeacher(id, teacherId);
     }
 
     @DeleteMapping("/{id}")
