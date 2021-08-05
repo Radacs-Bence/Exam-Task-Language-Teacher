@@ -1,2 +1,4 @@
-create table languages (id bigint auto_increment, teach_id bigint, language varchar(255),
-                        constraint FK_TEACHER foreign key (teach_id) references teachers (id) ON UPDATE RESTRICT ON DELETE RESTRICT, primary key (id));
+create table languages (
+                           teach_id bigint not null,
+                           language varchar(255)
+) engine=InnoDB
