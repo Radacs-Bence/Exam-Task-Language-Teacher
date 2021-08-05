@@ -7,7 +7,6 @@ import java.time.LocalTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class TimeslotDTO {
 
     private Long id;

@@ -8,6 +8,7 @@ import languageTeacher.Languages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class CoursesController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Creates a course",
             description = "Creates a course, with name and language.")
-    public CourseDTO saveCourse(@RequestBody CreateCourseCommand command){
+    public CourseDTO saveCourse(@RequestBody @Valid CreateCourseCommand command){
         return coursesService.saveCourse(command);
     }
 
@@ -56,7 +57,7 @@ public class CoursesController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Adds a timeslot to the course",
             description = "Makes a timeslot and adds it to the course.")
-    public CourseTimetableDTO addTimeslot(@PathVariable("id") Long id, @RequestBody CreateTimeslotCommand command){
+    public CourseTimetableDTO addTimeslot(@PathVariable("id") Long id, @RequestBody @Valid CreateTimeslotCommand command){
         return coursesService.addTimeslot(id, command);
     }
 
@@ -64,7 +65,7 @@ public class CoursesController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Find course by id, with timetable",
             description = "Finds the course based on id with timetable, but without Teacher.")
-    public CourseDTO modifyDuration(@PathVariable Long id, @RequestBody UpdateDurationCommand command){
+    public CourseDTO modifyDuration(@PathVariable Long id, @RequestBody @Valid UpdateDurationCommand command){
         return coursesService.modifyDuration(id, command);
     }
 

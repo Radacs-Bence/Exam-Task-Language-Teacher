@@ -5,6 +5,7 @@ import languageTeacher.courses.CreateCourseCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,7 @@ public class TeachersController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Save a teacher",
             description = "Saves a teacher into the repository with a name.")
-    public TeacherDTO saveTeacher(@RequestBody CreateTeacherCommand command){
+    public TeacherDTO saveTeacher(@RequestBody @Valid CreateTeacherCommand command){
         return teachersService.saveTeacher(command);
     }
 
@@ -50,7 +51,7 @@ public class TeachersController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Add language to teacher",
             description = "Adds a language to the teacher.")
-    public TeacherDTO addLanguage(@PathVariable Long id, @RequestBody UpdateLanguageCommand command){
+    public TeacherDTO addLanguage(@PathVariable Long id, @RequestBody @Valid UpdateLanguageCommand command){
         return teachersService.addLanguage(id, command);
     }
 
@@ -58,7 +59,7 @@ public class TeachersController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Modify contact info",
             description = "Modifys the contact information of the teacher.")
-    public TeacherDTO modifyContact(@PathVariable Long id, @RequestBody UpdateContactCommand command){
+    public TeacherDTO modifyContact(@PathVariable Long id, @RequestBody @Valid UpdateContactCommand command){
         return teachersService.modifyContact(id, command);
     }
 
@@ -66,7 +67,7 @@ public class TeachersController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Add course to teacher",
             description = "Adds a newly created course to the teacher.")
-    public TeacherCourseDTO addCourse(@PathVariable Long id, @RequestBody CreateCourseCommand command){
+    public TeacherCourseDTO addCourse(@PathVariable Long id, @RequestBody @Valid CreateCourseCommand command){
         return teachersService.addCourse(id, command);
     }
 
