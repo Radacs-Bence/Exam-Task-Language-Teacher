@@ -4,5 +4,6 @@ create table courses (
                          language varchar(255),
                          name varchar(255),
                          start date,
+                         teacher_id bigint,
                          primary key (id)
-) engine=InnoDB;
+) engine=InnoDB
