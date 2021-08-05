@@ -1,30 +1,44 @@
 package languageTeacher.courses;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Timetable")
+@Table(name = "Timetables", uniqueConstraints = {@UniqueConstraint(columnNames = {"day", "start_time"})})
 public class Timeslot {
 
     @Id
-    @GeneratedValue(generator = "Time_Gen")
-    @TableGenerator(name = "Time_Gen", table = "Time_id_gen", pkColumnName = "id_gen ", pkColumnValue = "id_val")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Weekdays day;
 
-    private LocalTime time;
+    @Column(name = "start_time")
+    private LocalTime startTime;
 
-    private int durationInMinutes;
+    @Column(name = "length_in_min")
+    private int lengthInMinutes;
 
     @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Course course;
+
+    public Timeslot(Weekdays day, LocalTime startTime, int lengthInMinutes) {
+        this.day = day;
+        this.startTime = startTime;
+        this.lengthInMinutes = lengthInMinutes;
+    }
+
+    public Timeslot(Weekdays day, LocalTime startTime, Course course) {
+        this.day = day;
+        this.startTime = startTime;
+        this.course = course;
+    }
 }

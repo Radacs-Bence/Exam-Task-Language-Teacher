@@ -1,20 +1,19 @@
 package languageTeacher.courses;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class TimeslotDTO {
-
-    private Long id;
+public class CreateTimeslotCommand {
 
     private Weekdays day;
 
     private LocalTime startTime;
 
-    private int durationInMinutes;
+    private int lengthInMinutes;
 }

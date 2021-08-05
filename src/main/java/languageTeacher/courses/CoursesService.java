@@ -1,7 +1,6 @@
 package languageTeacher.courses;
 
 
-import languageTeacher.teachers.TeacherDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -57,5 +56,32 @@ public class CoursesService {
 
     public void deleteCourse(Long id) {
         coursesRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        coursesRepository.deleteAll();
+    }
+
+    public CourseTimetableDTO findCourseByIdWithTimetable(Long id) {
+        Course course = coursesRepository.findByIdWithTimetable(id);
+        return modelMapper.map(course, CourseTimetableDTO.class);
+    }
+
+    @Transactional
+    public CourseTimetableDTO addTimeslot(Long id, CreateTimeslotCommand command) {
+        Course course = coursesRepository.findByIdWithTimetable(id);
+
+        course.addTimeslot(new Timeslot(command.getDay(), command.getStartTime(), command.getLengthInMinutes()));
+
+        return modelMapper.map(course, CourseTimetableDTO.class);
+    }
+
+    @Transactional
+    public CourseTimetableDTO removeTimeslot(Long id, Long timeSlotId) {
+        Course course = coursesRepository.findByIdWithTimetable(id);
+
+        course.removeTimeslot(timeSlotId);
+
+        return modelMapper.map(course, CourseTimetableDTO.class);
     }
 }

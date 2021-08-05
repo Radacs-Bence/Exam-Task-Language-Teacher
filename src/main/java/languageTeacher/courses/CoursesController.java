@@ -26,10 +26,22 @@ public class CoursesController {
         return coursesService.findCourseById(id);
     }
 
+    @GetMapping("/{id}/timetable")
+    public CourseTimetableDTO findCourseTimetable(@PathVariable("id") Long id){
+        return coursesService.findCourseByIdWithTimetable(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CourseDTO saveCourse(@RequestBody CreateCourseCommand command){
         return coursesService.saveCourse(command);
+    }
+
+
+    @PostMapping("/{id}/timetable")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CourseTimetableDTO addTimeslot(@PathVariable("id") Long id, @RequestBody CreateTimeslotCommand command){
+        return coursesService.addTimeslot(id, command);
     }
 
     @PutMapping("/{id}/duration")
@@ -42,5 +54,17 @@ public class CoursesController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCourse(@PathVariable Long id){
         coursesService.deleteCourse(id);
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAll(){
+        coursesService.deleteAll();
+    }
+
+    @DeleteMapping ("/{id}/timetable/{timeSlotId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeTimeslot(@PathVariable("id") Long id , @PathVariable("timeSlotId") Long timeSlotId){
+        coursesService.removeTimeslot(id, timeSlotId);
     }
 }

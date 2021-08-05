@@ -1,0 +1,56 @@
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "name" : "e",
+  "language" : "ENG"
+}
+
+###
+
+POST http://localhost:8080/api/courses/1/timetable
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "day": "SAT",
+  "startTime": "12:01",
+  "lengthInMinutes": "90"
+}
+
+###
+PUT http://localhost:8080/api/courses/1/duration
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "start" : "2020-01-01",
+  "end" : "2020-02-01"
+}
+
+###
+
+GET http://localhost:8080/api/courses/
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/courses/1/timetable
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/api/courses/2
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/api/courses/1/timetable/1
+Accept: application/json
+
+
+###

@@ -1,14 +1,13 @@
 package languageTeacher.courses;
 
 import languageTeacher.Languages;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -18,8 +17,7 @@ import java.util.List;
 public class Course {
 
     @Id
-    @GeneratedValue(generator = "Course_Gen")
-    @TableGenerator(name = "Course_Gen", table = "course_id_gen", pkColumnName = "id_gen ", pkColumnValue = "id_val")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -27,7 +25,9 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Languages language;
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "course")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "course", orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Timeslot> timetable;
 
     private LocalDate start;
@@ -45,6 +45,11 @@ public class Course {
         }
         timeslot.setCourse(this);
         timetable.add(timeslot);
+    }
+
+    public void removeTimeslot(Long timeSlotId){
+        Timeslot timeslot = timetable.stream().filter(t -> t.getId() == timeSlotId).findAny().get();
+        timetable.remove(timeslot);
     }
 
 
