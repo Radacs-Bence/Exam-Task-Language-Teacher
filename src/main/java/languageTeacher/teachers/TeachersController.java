@@ -48,4 +48,10 @@ public class TeachersController {
     public void deleteTeacher(@PathVariable Long id){
         teachersService.deleteTeacher(id);
     }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAll(){
+        teachersService.deleteAll();
+    }
 }

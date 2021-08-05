@@ -25,7 +25,7 @@ public class TeachersService {
     }
 
     public List<TeacherDTO> listTeachers() {
-        List<Teacher> teachers = teachersRepository.findAll();
+        List<Teacher> teachers = teachersRepository.findAllWithLanguages();
 
         Type targetListType = new TypeToken<List<TeacherDTO>>(){}.getType();
         return modelMapper.map(teachers, targetListType);
@@ -63,5 +63,9 @@ public class TeachersService {
 
     public void deleteTeacher(Long id) {
         teachersRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        teachersRepository.deleteAll();
     }
 }

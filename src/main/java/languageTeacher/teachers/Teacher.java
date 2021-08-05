@@ -17,14 +17,15 @@ import java.util.Set;
 public class Teacher {
 
     @Id
-    @GeneratedValue(generator = "Teacher_Gen")
-    @TableGenerator(name = "Teacher_Gen", table = "teach_id_gen", pkColumnName = "id_gen ", pkColumnValue = "id_val")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
     @ElementCollection
+    @Column(name = "language")
     @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "languages", joinColumns = @JoinColumn (name = "teach_id"))
     private Set<Languages> languages;
 
     @Embedded
