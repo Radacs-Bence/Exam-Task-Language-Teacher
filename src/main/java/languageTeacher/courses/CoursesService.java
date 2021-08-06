@@ -38,12 +38,6 @@ public class CoursesService {
         return modelMapper.map(course, CourseDTO.class);
     }
 
-    private Course searchById(long id) {
-        Course course = coursesRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Course not found: " + id));
-        return course;
-    }
-
-
     public CourseDTO saveCourse(CreateCourseCommand command) {
         Course course = new Course(command.getName(), command.getLanguage());
         coursesRepository.save(course);
@@ -89,11 +83,17 @@ public class CoursesService {
 
     @Transactional
     public CourseDTO modifyTeacher(Long id, Long teacherId) {
-        Teacher teacher = teachersRepository.findById(teacherId).get();
-        Course course = coursesRepository.findById(id).get();
+        Teacher teacher = teachersRepository.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher not found: " + id));
+        Course course = searchById(id);
 
         course.assingTeacher(teacher);
-        course = coursesRepository.findById(id).get();
+        course = searchById(id);
         return modelMapper.map(course, CourseDTO.class);
     }
+
+
+    private Course searchById(long id) {
+        return coursesRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Course not found: " + id));
+    }
+
 }
