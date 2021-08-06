@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
@@ -15,15 +15,14 @@ import javax.validation.constraints.Size;
 @Validated
 public class UpdateContactCommand {
 
-    @NotNull
-    @Size(min = 1)
+    @NotBlank
     private String address;
 
-    @NotNull
+    @NotBlank
     @Email
     private String eMail;
 
-    @NotNull
+    @NotBlank
     @Size(min = 7)
     private String phone;
 

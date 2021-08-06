@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +15,7 @@ import javax.validation.constraints.Size;
 @Validated
 public class CreateCourseCommand {
 
-    @NotNull
-    @Size(min = 1)
+    @NotBlank
     private String name;
 
     @NotNull

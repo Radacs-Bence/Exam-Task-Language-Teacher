@@ -22,7 +22,6 @@ public class CreateTimeslotCommand {
     @NotNull
     private LocalTime startTime;
 
-    @NotNull
     @Positive
     private int lengthInMinutes;
 }
