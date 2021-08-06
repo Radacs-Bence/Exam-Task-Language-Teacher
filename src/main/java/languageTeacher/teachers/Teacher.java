@@ -56,8 +56,7 @@ public class Teacher {
         courses.add(course);
     }
 
-    public void removeCourse(Long courseId){
-        Course course = courses.stream().filter(c -> c.getId() == courseId).findAny().get();
+    public void removeCourse(Course course){
         course.setTeacher(null);
         courses.remove(course);
     }

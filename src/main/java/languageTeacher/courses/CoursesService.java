@@ -95,7 +95,7 @@ public class CoursesService {
         Course course = coursesRepository.findById(id).get();
 
         course.assingTeacher(teacher);
-
+        course = coursesRepository.findById(id).get();
         return modelMapper.map(course, CourseDTO.class);
     }
 }

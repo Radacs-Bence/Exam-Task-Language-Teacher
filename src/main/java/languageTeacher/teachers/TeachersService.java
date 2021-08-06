@@ -5,6 +5,7 @@ import languageTeacher.courses.CoursesRepository;
 import languageTeacher.courses.CreateCourseCommand;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +23,6 @@ public class TeachersService {
     public TeachersService(ModelMapper modelMapper, TeachersRepository teachersRepository, CoursesRepository coursesRepository) {
         this.modelMapper = modelMapper;
         this.teachersRepository = teachersRepository;
-       /* teachersRepository.save(new Teacher("Gipsz Jakab"));
-        teachersRepository.save(new Teacher("Gipsz Jónás"));
-        teachersRepository.save(new Teacher("Kis Piroska"));*/
         this.coursesRepository = coursesRepository;
     }
 
@@ -49,6 +47,7 @@ public class TeachersService {
     public TeacherDTO saveTeacher(CreateTeacherCommand command) {
         Teacher teacher = new Teacher(command.getName());
         teachersRepository.save(teacher);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper.map(teacher, TeacherDTO.class);
     }
 
@@ -91,7 +90,9 @@ public class TeachersService {
     public TeacherCourseDTO removeTeacherCourse(Long id, Long courseId) {
         Teacher teacher = teachersRepository.findByIdWithCourses(id);
 
-        teacher.removeCourse(courseId);
+        Course course = coursesRepository.findById(courseId).get();
+        teacher.removeCourse(course);
+
         return modelMapper.map(teacher, TeacherCourseDTO.class);
     }
 }

@@ -59,9 +59,10 @@ public class Course {
     }
 
     public void assingTeacher(Teacher teacher){
-        if (teacher != null){
-            teacher.removeCourse(id);
+        if (this.teacher != null){
+            this.teacher.removeCourse(this);
         }
+        this.teacher = teacher;
         teacher.addCourse(this);
     }
 }

@@ -1,6 +1,9 @@
 package languageTeacher.courses;
 
 import languageTeacher.Languages;
+import languageTeacher.teachers.CreateTeacherCommand;
+import languageTeacher.teachers.TeacherDTO;
+import languageTeacher.teachers.TeachersService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +29,13 @@ public class CoursesControllerRestTemplateIT {
     @Autowired
     CoursesService coursesService;
 
+    @Autowired
+    TeachersService teachersService;
+
     @BeforeEach
     void init() {
+        teachersService.deleteAll();
+        coursesService.deleteAll();
         coursesService.saveCourse(new CreateCourseCommand("Angol b2", Languages.ENG));
         coursesService.saveCourse(new CreateCourseCommand("Angol c1", Languages.ENG));
         coursesService.saveCourse(new CreateCourseCommand("Német b2", Languages.DEU));
@@ -35,7 +43,8 @@ public class CoursesControllerRestTemplateIT {
 
     @AfterEach
     void clean(){
-        coursesService.deleteAll();
+//        teachersService.deleteAll();
+  //      coursesService.deleteAll();
     }
 
     @Test
@@ -171,6 +180,28 @@ public class CoursesControllerRestTemplateIT {
                 .hasSize(1)
                 .extracting(TimeslotDTO::getDay)
                 .contains(Weekdays.SAT);
+    }
+
+    @Test
+    void modifyTeacherTest(){
+        CourseDTO courseCreated = template.postForObject("/api/courses",
+                new CreateCourseCommand("Olasz c1", Languages.ITA),
+                CourseDTO.class);
+
+        TeacherDTO teacher = template.postForObject("/api/teachers",
+                new CreateTeacherCommand("Nagy Piroska"),
+                TeacherDTO.class);
+
+        template.put("/api/courses/{id}/teacher/{teacherID}",
+                null,
+                courseCreated.getId(),
+                teacher.getId());
+
+        CourseDTO courseFound  = template.getForObject("/api/courses/{id}",
+                CourseDTO.class,
+                courseCreated.getId());
+
+        assertThat(courseFound.getTeacher().getName()).isEqualTo("Nagy Piroska");
     }
 
 
