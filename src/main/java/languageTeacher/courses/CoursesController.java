@@ -2,19 +2,16 @@ package languageTeacher.courses;
 
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import languageTeacher.Languages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
-@Tag( name = "Operations on courses")
+@Tag( name = "Operations on courses and their timetables")
 public class CoursesController {
 
     private CoursesService coursesService;

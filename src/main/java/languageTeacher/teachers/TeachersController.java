@@ -1,6 +1,7 @@
 package languageTeacher.teachers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import languageTeacher.courses.CreateCourseCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/teachers")
+@Tag( name = "Operations on teachers")
 public class TeachersController {
 
     private TeachersService teachersService;
