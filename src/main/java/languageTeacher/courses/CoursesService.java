@@ -81,12 +81,10 @@ public class CoursesService {
     }
 
     @Transactional
-    public CourseTimetableDTO removeTimeslot(Long id, Long timeSlotId) {
+    public void removeTimeslot(Long id, Long timeSlotId) {
         Course course = coursesRepository.findByIdWithTimetable(id);
 
         course.removeTimeslot(timeSlotId);
-
-        return modelMapper.map(course, CourseTimetableDTO.class);
     }
 
     @Transactional
