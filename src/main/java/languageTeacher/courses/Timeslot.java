@@ -35,10 +35,4 @@ public class Timeslot {
         this.startTime = startTime;
         this.lengthInMinutes = lengthInMinutes;
     }
-
-    public Timeslot(Weekdays day, LocalTime startTime, Course course) {
-        this.day = day;
-        this.startTime = startTime;
-        this.course = course;
-    }
 }
