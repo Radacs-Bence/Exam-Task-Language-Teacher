@@ -82,8 +82,8 @@ public class TeachersService {
     public TeacherCourseDTO addCourse(Long id, CreateCourseCommand command) {
         Teacher teacher = teachersRepository.findByIdWithCourses(id);
         teacher.addCourse(new Course(command.getName(), command.getLanguage()));
-        Teacher teacher2 = teachersRepository.findByIdWithCourses(id);
-        return modelMapper.map(teacher2, TeacherCourseDTO.class);
+
+        return modelMapper.map(teacher, TeacherCourseDTO.class);
     }
 
     @Transactional

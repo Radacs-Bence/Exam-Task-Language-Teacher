@@ -87,7 +87,7 @@ public class CoursesService {
         Course course = searchById(id);
 
         course.assingTeacher(teacher);
-        course = searchById(id);
+
         return modelMapper.map(course, CourseDTO.class);
     }
 
